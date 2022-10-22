@@ -1,0 +1,11 @@
+name: Trigger Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Trigger-Test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Called\!"
