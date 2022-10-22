@@ -1,0 +1,40 @@
+name: Shell Options test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Shell-Options-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: GitHub Runner の設定を調べる
+        run: |
+          set -o
+      - name: histexpand
+        run: |
+          echo "Expand!"
+          echo "Expand!!"
+
+      - name: set command
+        run: |
+          # errexit を無効にする
+          set +e
+          diff <(echo hoge) <(echo hogee) > hoge
+          # errexit を有効にする
+          set -e
+
+          echo "notify diff"
+
+      # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#exit-codes-and-error-action-preference
+      - name: when only `bash` specified
+        run: |
+          echo "shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}"
+        shell: bash
+
+      # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#exit-codes-and-error-action-preference
+      - name: Exit codes and error action preference
+        run: |
+          set -o
+          # This command fails
+          # diff <(echo hoge) <(echo hogee) > hoge
+        shell: bash {0}
