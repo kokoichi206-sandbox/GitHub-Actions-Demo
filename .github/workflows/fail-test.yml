@@ -1,0 +1,22 @@
+name: Failure test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Failure-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: GitHub Runner の設定を調べる
+        run: |
+          set -o
+      - name: grep test
+        run: |
+          grep "Ask" -r
+      - name: pipefail test
+        run: |
+          echo hoge | grep pien | xargs echo
+      - name: When any steps fails
+        if: ${{ failure() }}
+        run: |
+          echo "Failed\!"
