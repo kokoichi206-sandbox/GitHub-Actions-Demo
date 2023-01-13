@@ -1,7 +1,8 @@
 name: GitHub Actions Demo
 
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on:
+  workflow_dispatch:
 
 jobs:
   Explore-GitHub-Actions:
@@ -17,4 +18,5 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+          ls ${{ github.workspace }} --color=auto
       - run: echo "🍏 This job's status is ${{ job.status }}."
